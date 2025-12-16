@@ -189,6 +189,30 @@ export const useActivityStore = create<ActivityStore>()(
     }),
     {
       name: 'interest-discovery-session',
+      storage: {
+        getItem: (name) => {
+          const str = localStorage.getItem(name);
+          if (!str) return null;
+          const { state } = JSON.parse(str);
+          // Convert cardPlacements object back to Map
+          if (state.cardPlacements && !(state.cardPlacements instanceof Map)) {
+            state.cardPlacements = new Map(Object.entries(state.cardPlacements).map(([k, v]) => [Number(k), v]));
+          }
+          return { state };
+        },
+        setItem: (name, newValue) => {
+          const { state } = newValue;
+          // Convert Map to object for storage
+          const storageState = {
+            ...state,
+            cardPlacements: state.cardPlacements instanceof Map
+              ? Object.fromEntries(state.cardPlacements)
+              : state.cardPlacements,
+          };
+          localStorage.setItem(name, JSON.stringify({ state: storageState }));
+        },
+        removeItem: (name) => localStorage.removeItem(name),
+      },
     }
   )
 );
