@@ -79,7 +79,7 @@ export const InstructionsScreen: React.FC<InstructionsScreenProps> = ({ onContin
           </div>
 
           {/* Continue button */}
-          <div className="text-center">
+          <div className="flex justify-center">
             <Button onClick={onContinue} variant="primary">
               Got It! →
             </Button>
