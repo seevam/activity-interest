@@ -44,7 +44,18 @@ export async function POST(request: NextRequest) {
     });
 
     const result = completion.choices[0].message.content;
-    const profile = JSON.parse(result || '{}');
+
+    // Parse JSON with proper error handling
+    let profile;
+    try {
+      profile = JSON.parse(result || '{}');
+    } catch (parseError) {
+      console.error('Failed to parse OpenAI response:', parseError);
+      return NextResponse.json(
+        { error: 'Invalid response format from AI service' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ profile });
   } catch (error: any) {

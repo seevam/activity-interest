@@ -29,7 +29,7 @@ export const InterestCard: React.FC<InterestCardProps> = ({ card, isPlaced = fal
       {...listeners}
       {...attributes}
       className={`interest-card ${isDragging ? 'dragging' : ''} ${
-        isPlaced ? 'opacity-50' : ''
+        isPlaced ? 'opacity-70' : ''
       } flex flex-col items-center justify-center gap-2 select-none`}
       tabIndex={0}
       role="button"
